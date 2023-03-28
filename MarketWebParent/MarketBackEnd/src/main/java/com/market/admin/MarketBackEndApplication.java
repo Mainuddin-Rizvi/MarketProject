@@ -2,8 +2,10 @@ package com.market.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
+@EntityScan({"com.market.common.entity","com.market.admin.user"})
 public class MarketBackEndApplication {
 
 	public static void main(String[] args) {

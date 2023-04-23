@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -29,7 +31,7 @@ public class UserService {
     }
 
 
-    public void save(User user) {
+    public User save(User user) {
         boolean isUpdatingUser = (user.getId() != null);
         if (isUpdatingUser){
             User existingUser = userRepository.findById(user.getId()).get();
@@ -42,7 +44,26 @@ public class UserService {
             encodePassword(user);
         }
         userRepository.save(user);
+        return user;
     }
+//public void save(User user) {
+//    boolean isUpdatingUser = (user.getId() != null);
+//    if (isUpdatingUser) {
+//        Optional<User> existingUserOpt = userRepository.findById(user.getId());
+//        if (existingUserOpt.isPresent()) {
+//            User existingUser = existingUserOpt.get();
+//            if (user.getPassword().isEmpty()) {
+//                user.setPassword(existingUser.getPassword());
+//            } else {
+//                encodePassword(user);
+//            }
+//        }
+//    } else {
+//        encodePassword(user);
+//    }
+//    userRepository.save(user);
+//}
+
 
     private void encodePassword(User user){
         String encodedPassword =  passwordEncoder.encode(user.getPassword());
@@ -69,5 +90,17 @@ public class UserService {
         }catch (NoSuchElementException ex){
             throw new UserNotFoundException("Could Not find any user with Id");
         }
+    }
+
+    public void delete(Integer id) throws UserNotFoundException {
+        Long countById = userRepository.countById(id);
+        if (countById == null || countById == 0){
+            throw new UserNotFoundException("could not find any user with this Id "+id);
+        }
+        userRepository.deleteById(id);
+    }
+
+    public  void updateUserEnabledStatus(Integer id,boolean enabled){
+        userRepository.updateEnabledStatus(id,enabled);
     }
 }

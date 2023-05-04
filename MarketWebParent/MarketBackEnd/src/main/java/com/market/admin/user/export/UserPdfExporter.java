@@ -1,4 +1,4 @@
-package com.market.admin.user;
+package com.market.admin.user.export;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.market.admin.user.AbstractExporter;
 import com.market.common.entity.User;
 
 public class UserPdfExporter extends AbstractExporter {

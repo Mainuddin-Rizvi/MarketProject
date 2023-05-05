@@ -1,9 +1,10 @@
-package com.market.admin.user;
+package com.market.admin.user.controller;
 
 import java.io.IOException;
 
 import com.market.admin.FileUploadUtil;
 import com.market.admin.security.MarketUserDetails;
+import com.market.admin.user.UserService;
 import com.market.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,7 +32,7 @@ public class AccountController {
         User user = service.getByEmail(email);
         model.addAttribute("user", user);
 
-        return "account_form";
+        return "users/account_form";
 
     }
 

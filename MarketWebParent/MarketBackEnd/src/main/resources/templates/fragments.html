@@ -61,6 +61,10 @@
            th:userId="${user.id}"
            title="Delete this user"></a>
     </div>
+
+
+
+
     <div th:fragment="category_status" th:remove="tag">
         <a th:if="${cat.enabled == true}" class="fas fa-check-circle fa-2x icon-green"
            th:href="@{'/categories/' + ${cat.id} + '/enabled/false'}"
